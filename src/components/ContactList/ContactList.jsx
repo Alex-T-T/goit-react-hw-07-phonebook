@@ -7,7 +7,7 @@ import { getFilteredContacts } from "utils/getFilteredContacts";
 import { useGetContactsQuery } from "redux/contactsSlice";
 
 export const ContactList = () => {
-    const { data: contacts,isLoading } = useGetContactsQuery();
+    const { data: contacts, error, isLoading } = useGetContactsQuery();
     const filter = useSelector(getFilter)
     
     const getFilteredContactList = getFilteredContacts(filter, contacts)
@@ -20,6 +20,7 @@ export const ContactList = () => {
             name={contact.name}
             number={contact.number} />
         )}
+        {error && <p>Somethithg is wrong... Try later</p>}
     </ul>
 };
 

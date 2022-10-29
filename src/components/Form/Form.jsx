@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import css from '../Form/Form.module.css';
-import { useSelector, useDispatch } from 'react-redux';
 import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
 import { auditName } from 'utils/auditName';
 import { auditNumber } from 'utils/auditNumber';
 
 export const Form = () => {
     const [name, setname] = useState('');
     const [number, setNumber] = useState('');
-    
-    // const dispatch = useDispatch();
-    // const contacts = useSelector(getContacts);
 
     const { data } = useGetContactsQuery();
     const [addNewContact] = useAddContactMutation();
-
 
     const handleInputChange = (event) => {
         const { name, value } = event.currentTarget

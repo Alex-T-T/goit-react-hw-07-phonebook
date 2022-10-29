@@ -1,17 +1,19 @@
 import css from '../ContactItem/ContactItem.module.css';
 import React from 'react';
 import PropTypes from 'prop-types'
-// import { useDispatch } from 'react-redux';
-// import { removeContact } from 'redux/contactsSlice';
+import { useRemoveContactMutation } from 'redux/contactsSlice';
 
 export const ContactItem = ({id, name, number}) => {
-    // const dispatch = useDispatch()
+    const [removeContact, result] = useRemoveContactMutation();
     
     return (
         <li key={id} className={css.contactListItem}>
                                 <p>Name: {name}</p>
                                 <p>Number: {number}</p>
-                                {/* <button className={css.contactRemoveBtn} onClick={()=> dispatch(removeContact({id}))} type="button"> Remove </button> */}
+            <button className={css.contactRemoveBtn}
+                onClick={() => removeContact(id)}
+                type="button"
+                disabled={result.isLoading}> Remove </button>
                             </li>
     )
 }
