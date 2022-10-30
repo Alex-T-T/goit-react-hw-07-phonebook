@@ -3,20 +3,31 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { useRemoveContactMutation } from 'redux/contactsSlice';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 
 export const ContactItem = ({id, name, number}) => {
     const [removeContact, result] = useRemoveContactMutation();
-    console.log("result DELETE => ", result)
+    // console.log("result DELETE => ", result)
 
-    const deleteContact = async (id) => {
-        try {
-            await removeContact(id);
-            toast.success ("Contact successfully removed")
-        } catch (error) {
-            toast.error ("Epic Fail")
-        }
-    };
+    useEffect(() => {
+        result.isError && toast.error("error on remove Contact")
+    }, [result.isError]); 
+
+    useEffect(() => {
+        result.isSuccess && toast.success("Contact successfully removed")
+    }, [result.isSuccess]);
+
+
+
+    // const deleteContact = async (id) => {
+    //     try {
+    //         await removeContact(id);
+    //         toast.success ("Contact successfully removed")
+    //     } catch (error) {
+    //         toast.error ("Epic Fail")
+    //     }
+    // };
 
     return (
         <>
@@ -24,7 +35,7 @@ export const ContactItem = ({id, name, number}) => {
                                 <p>Name: {name}</p>
                                 <p>Number: {number}</p>
                 <button className={css.contactRemoveBtn}
-                    onClick={() => deleteContact(id)}
+                    onClick={() => removeContact(id)}
                     type="button"
                     disabled={result.isLoading}> Remove </button>
             </li>

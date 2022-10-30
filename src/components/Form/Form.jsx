@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import css from '../Form/Form.module.css';
 import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsSlice';
 import { auditName } from 'utils/auditName';
@@ -11,8 +11,17 @@ export const Form = () => {
     const [number, setNumber] = useState('');
 
     const { data } = useGetContactsQuery();
-    const [addNewContact] = useAddContactMutation();
-    // console.log("result ADD =>", result)
+    const [addNewContact, result] = useAddContactMutation();
+    // console.log("addNewContact =>", addNewContact)
+
+    useEffect(() => {
+        result.isError && toast.error("error on add Contact")
+    }, [result.isError]); 
+
+    useEffect(() => {
+        result.isSuccess && toast.success("Contact successfully added")
+    }, [result.isSuccess]);
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.currentTarget
@@ -32,14 +41,17 @@ export const Form = () => {
         }
     }
 
-    const createContact = async ({ name, number }) => {
-        try {
-            await addNewContact({ name, number });
-            toast.success ("Contact successfully added")
-        } catch (error) {
-            toast.error ("Epic Fail")
-        }
-    };
+    // const createContact = async ({ name, number }) => {
+    //     try {
+    //         await addNewContact({ name, number });
+    //         toast.success ("Contact successfully added")
+    //     } catch (error) {
+    //         toast.error(error.message)
+    //     }
+    // };
+
+
+
 
     function handleInputSubmit  (event) {
         event.preventDefault();
@@ -54,8 +66,8 @@ export const Form = () => {
             return 
         };
 
-        createContact({ name, number });
-        // addNewContact({ name, number });
+        // createContact({ name, number });
+        addNewContact({ name, number });
 
         reset();
     }
@@ -94,6 +106,7 @@ export const Form = () => {
 
                 <button className={css.addBtn } type='submit'> Add contact</button>
             </form>
+
         </>
     )
 }
