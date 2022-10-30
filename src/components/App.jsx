@@ -1,7 +1,8 @@
 import { Form } from './Form/Form';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-// import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const App = () => {
@@ -16,9 +17,9 @@ export const App = () => {
 
                 <ContactList />
 
-                {/* <ToastContainer position="bottom-center"
+                <ToastContainer position="top-right"
                                 autoClose={3000}
-                                theme="dark"/> */}
+                                theme="dark"/>
         </>
     )
 }

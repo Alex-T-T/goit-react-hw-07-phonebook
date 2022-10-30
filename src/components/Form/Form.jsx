@@ -3,20 +3,21 @@ import css from '../Form/Form.module.css';
 import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsSlice';
 import { auditName } from 'utils/auditName';
 import { auditNumber } from 'utils/auditNumber';
-// import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 
 export const Form = () => {
     const [name, setname] = useState('');
     const [number, setNumber] = useState('');
 
     const { data } = useGetContactsQuery();
-    const [addNewContact, {isError, isSuccess}] = useAddContactMutation();
+    const [addNewContact] = useAddContactMutation();
+    // console.log("result ADD =>", result)
 
     const handleInputChange = (event) => {
         const { name, value } = event.currentTarget
         
-        console.log('event.currentTarget.name =>', event.currentTarget.name )
+        // console.log('event.currentTarget.name =>', event.currentTarget.name )
         switch (name) {
             case 'name':
                 setname(value);
@@ -31,30 +32,30 @@ export const Form = () => {
         }
     }
 
-    // const createContact = async ({ name, number }) => {
-    //     try {
-    //         await addNewContact({ name, number });
-    //         alert('all is good!')
-    //     } catch (error) {
-    //         alert(error)
-    //     }
-    // };
+    const createContact = async ({ name, number }) => {
+        try {
+            await addNewContact({ name, number });
+            toast.success ("Contact successfully added")
+        } catch (error) {
+            toast.error ("Epic Fail")
+        }
+    };
 
     function handleInputSubmit  (event) {
         event.preventDefault();
         
         if (auditName(data, name)) {
-            alert(`${name} is already in contacts.`);
+            toast.error (`${name} is already in contacts.`);
             return 
         };
 
         if (auditNumber(data, number)) {
-            alert(`${number} is already in contacts.`);
+            toast.error (`${number} is already in contacts.`);
             return 
         };
 
-        // createContact({ name, number });
-        addNewContact({ name, number });
+        createContact({ name, number });
+        // addNewContact({ name, number });
 
         reset();
     }
@@ -93,9 +94,6 @@ export const Form = () => {
 
                 <button className={css.addBtn } type='submit'> Add contact</button>
             </form>
-            
-            {isSuccess && alert("Ok")}
-            {isError && alert("Fail")}
         </>
     )
 }
