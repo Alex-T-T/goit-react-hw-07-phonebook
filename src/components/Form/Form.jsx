@@ -3,13 +3,15 @@ import css from '../Form/Form.module.css';
 import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsSlice';
 import { auditName } from 'utils/auditName';
 import { auditNumber } from 'utils/auditNumber';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 export const Form = () => {
     const [name, setname] = useState('');
     const [number, setNumber] = useState('');
 
     const { data } = useGetContactsQuery();
-    const [addNewContact] = useAddContactMutation();
+    const [addNewContact, {isError, isSuccess}] = useAddContactMutation();
 
     const handleInputChange = (event) => {
         const { name, value } = event.currentTarget
@@ -29,6 +31,15 @@ export const Form = () => {
         }
     }
 
+    // const createContact = async ({ name, number }) => {
+    //     try {
+    //         await addNewContact({ name, number });
+    //         alert('all is good!')
+    //     } catch (error) {
+    //         alert(error)
+    //     }
+    // };
+
     function handleInputSubmit  (event) {
         event.preventDefault();
         
@@ -42,8 +53,9 @@ export const Form = () => {
             return 
         };
 
-        addNewContact({name, number});
-        
+        // createContact({ name, number });
+        addNewContact({ name, number });
+
         reset();
     }
 
@@ -53,6 +65,7 @@ export const Form = () => {
     }
 
     return (
+        <>
             <form className={css.form} onSubmit={handleInputSubmit}>
             <label> Name
                     <input
@@ -79,6 +92,10 @@ export const Form = () => {
             </label>    
 
                 <button className={css.addBtn } type='submit'> Add contact</button>
-        </form>
+            </form>
+            
+            {isSuccess && alert("Ok")}
+            {isError && alert("Fail")}
+        </>
     )
 }

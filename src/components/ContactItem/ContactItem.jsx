@@ -5,7 +5,7 @@ import { useRemoveContactMutation } from 'redux/contactsSlice';
 
 export const ContactItem = ({id, name, number}) => {
     const [removeContact, result] = useRemoveContactMutation();
-    
+
     return (
         <li key={id} className={css.contactListItem}>
                                 <p>Name: {name}</p>
