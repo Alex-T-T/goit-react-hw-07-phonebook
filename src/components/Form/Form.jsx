@@ -26,9 +26,6 @@ export const Form = () => {
         result.isError && toast.error("error on add Contact")
     }, [result.isError]); 
 
-
-
-
     const handleInputChange = (event) => {
         const { name, value } = event.currentTarget
         
@@ -47,18 +44,6 @@ export const Form = () => {
         }
     }
 
-    // const createContact = async ({ name, number }) => {
-    //     try {
-    //         await addNewContact({ name, number });
-    //         toast.success ("Contact successfully added")
-    //     } catch (error) {
-    //         toast.error(error.message)
-    //     }
-    // };
-
-
-
-
     function handleInputSubmit  (event) {
         event.preventDefault();
         
@@ -72,7 +57,6 @@ export const Form = () => {
             return 
         };
 
-        // createContact({ name, number });
         addNewContact({ name, number });
 
         reset();
