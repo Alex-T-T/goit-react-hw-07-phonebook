@@ -18,17 +18,6 @@ export const ContactItem = ({id, name, number}) => {
         result.isSuccess && toast.success("Contact successfully removed")
     }, [result.isSuccess]);
 
-
-
-    // const deleteContact = async (id) => {
-    //     try {
-    //         await removeContact(id);
-    //         toast.success ("Contact successfully removed")
-    //     } catch (error) {
-    //         toast.error ("Epic Fail")
-    //     }
-    // };
-
     return (
         <>
             <li key={id} className={css.contactListItem}>
