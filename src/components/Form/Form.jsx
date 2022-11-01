@@ -4,6 +4,8 @@ import { useAddContactMutation, useGetContactsQuery } from 'redux/contactsSlice'
 import { auditName } from 'utils/auditName';
 import { auditNumber } from 'utils/auditNumber';
 import { toast } from 'react-toastify';
+import { ThreeDots } from  'react-loader-spinner'
+
 
 
 export const Form = () => {
@@ -13,14 +15,18 @@ export const Form = () => {
     const { data } = useGetContactsQuery();
     const [addNewContact, result] = useAddContactMutation();
     // console.log("addNewContact =>", addNewContact)
+    
+    const btnText =  result.isLoading ? <ThreeDots  color="white" height="15" width="60"/> : 'Add contact' 
+
+    useEffect(() => {
+        result.isSuccess && toast.success("Contact successfully added")
+    }, [result.isSuccess]);
 
     useEffect(() => {
         result.isError && toast.error("error on add Contact")
     }, [result.isError]); 
 
-    useEffect(() => {
-        result.isSuccess && toast.success("Contact successfully added")
-    }, [result.isSuccess]);
+
 
 
     const handleInputChange = (event) => {
@@ -104,7 +110,7 @@ export const Form = () => {
                     />
             </label>    
 
-                <button className={css.addBtn } type='submit'> Add contact</button>
+                <button className={css.addBtn} type='submit' disabled={result.isLoading}> {btnText} </button>
             </form>
 
         </>
