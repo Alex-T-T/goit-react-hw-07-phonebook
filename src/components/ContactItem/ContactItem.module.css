@@ -17,7 +17,7 @@
 .contactRemoveBtn {
     margin-top: 5px;
     background: linear-gradient(to right, #333333, #dd1818);
-    border-radius: 4px;
+    border-radius: 8px;
 }
 
 .contactRemoveBtn:hover {
